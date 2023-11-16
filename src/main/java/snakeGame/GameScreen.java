@@ -32,14 +32,6 @@ public class GameScreen {
 
 	//Screen clear location
 	public void ClearScreenLocation(int x, int y) {
-
-		System.out.println(this.screenMatrix[y][x]);
-
-		if (this.screenMatrix[y][x] == '*') {
-
-			
-		}
-
 		this.screenMatrix[y][x] = '.';
 	}
 
@@ -64,4 +56,25 @@ public class GameScreen {
 	public char[][] getScreenMatrix() {
 		return screenMatrix;
 	}
+
+	public void clearScreenLose(String texto) {
+        try {
+            final String os = System.getProperty("os.name");
+
+            if (os.contains("Windows")) {
+                // Si el sistema operativo es Windows
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                // Si el sistema operativo es Unix o Linux
+                Runtime.getRuntime().exec("clear");
+            }
+			System.out.println(texto);
+
+			//? Cerramos el programa
+			System.exit(0);
+        } catch (final Exception e) {
+            // Manejar excepciones si ocurren
+            System.out.println("Error al intentar limpiar la consola: " + e.getMessage());
+        }
+    }
 }
