@@ -1,4 +1,4 @@
-package application;
+package snakeGame;
 
 public class Snake extends GameObject {
 

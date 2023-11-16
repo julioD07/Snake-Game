@@ -1,6 +1,7 @@
-package application;
+package snakeGame;
 
 import java.util.Scanner;
+import java.util.Objects;
 
 public class Main {
 
