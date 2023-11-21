@@ -34,10 +34,31 @@ public class Main {
 
 		// The game logic starts here
 		boolean isRunning = true;
+		char input;
+
+		//? Inicializamos el scanner para leer la entrada del usuario
+		Scanner scanner = new Scanner(System.in);
 
 		while (isRunning) {
 			screen.PrintScreen();
-			Helpers.MoverSerpiente(screen, snake, food);
+			// Get input from player and do something
+			switch (input = scanner.nextLine().charAt(0)) {
+				case 'a':
+					snake.moveLeft(screen, snake, food);
+					break;
+				case 'd':
+					snake.moveRight(screen, snake, food);
+					break;
+				case 'w':
+					snake.moveUp(screen, snake, food);
+					break;
+				case 's':
+					snake.moveDown(screen, snake, food);
+					break;
+				default:
+					//? Si no se pulsa ninguna tecla válida, enviamos un mensaje de error
+					System.out.println("Pulsa una tecla válida");
+			}
 		}
 	}
 
