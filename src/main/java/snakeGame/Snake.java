@@ -110,6 +110,50 @@ public class Snake extends GameObject {
 		screen.ClearScreenLocation(snake.getX(), snake.getY() - 1);
 	}
 
+	// public void move(GameScreen screen, Snake snake, Food food, Player player, String direction) {
+	// 	snake.setDirection(direction);
+	
+	// 	int newX = snake.getX();
+	// 	int newY = snake.getY();
+	
+	// 	switch (direction) {
+	// 		case "LEFT":
+	// 			newX--;
+	// 			break;
+	// 		case "RIGHT":
+	// 			newX++;
+	// 			break;
+	// 		case "UP":
+	// 			newY--;
+	// 			break;
+	// 		case "DOWN":
+	// 			newY++;
+	// 			break;
+	// 		default:
+	// 			// Manejo de la dirección desconocida (puedes agregar lógica adicional si es necesario)
+	// 			break;
+	// 	}
+	
+	// 	if (willSnakeHitWall(snake, screen)) {
+	// 		// Realiza acciones específicas cuando la serpiente choca con la pared
+	// 		Player.savePlayerInfo(player);
+	// 		screen.clearScreenLose("Perdiste, tu puntaje es: " + snake.getPuntaje() + " puntos");
+	// 		return; // Salir del método si la serpiente choca con la pared
+	// 	}
+	
+	// 	if (screen.getScreenMatrix()[newY][newX] == '*') {
+	// 		food.addRandomFoodNew(screen, food);
+	// 		snake.setPuntaje((short) (snake.getPuntaje() + 1), player);
+	// 	}
+	
+	// 	snake.setX(newX);
+	// 	snake.setY(newY);
+	
+	// 	screen.setObjectOnLocation(snake, snake.getX(), snake.getY());
+	// 	screen.ClearScreenLocation(snake.getX(), snake.getY());
+	// }
+	
+
 	// ? Funcion para validar si la serpiente se choca con la pared
 	private boolean willSnakeHitWall(Snake snake, GameScreen screen) {
 		// Obtiene la nueva posición de la cabeza de la serpiente después del movimiento
