@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 public class Player {
     private String name;
     private short score;
@@ -31,7 +33,12 @@ public class Player {
         return this.score;
     }
 
-    public void setScore(short score) {
+    public void setScore(short score, Player player) {
+        if (score >= 5) {
+            JOptionPane.showMessageDialog(null, "Ganaste, tu puntaje es: " + score + " puntos");
+            Player.savePlayerInfo(player);
+            System.exit(0);
+        }
         this.score = score;
     }
 
@@ -39,7 +46,7 @@ public class Player {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             // Obtener la ruta completa del archivo
-            String filePath = System.getProperty("user.dir") + File.separator + "players.json";
+            String filePath = System.getProperty("user.dir") + "/src/data/players.json";
             File file = new File(filePath);
             System.out.println(file.getAbsolutePath());
     
@@ -69,7 +76,7 @@ public class Player {
     public static List<Player> readPlayerInfo() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            File file = new File(System.getProperty("user.dir") + File.separator + "players.json");
+            File file = new File(System.getProperty("user.dir") + "/src/data/players.json");
 
             // Si el archivo no existe, devuelve una lista vacía
             if (!file.exists()) {

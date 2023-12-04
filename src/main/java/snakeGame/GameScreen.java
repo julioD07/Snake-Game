@@ -1,5 +1,12 @@
 package snakeGame;
 
+import javax.swing.UIManager;
+
+import javafx.scene.text.Font;
+import javax.swing.JOptionPane;
+
+
+
 public class GameScreen {
 
 	private int width, height;
@@ -28,6 +35,19 @@ public class GameScreen {
 			}
 			System.out.println();
 		}
+	}
+
+	public String getScreenAsString() {
+		StringBuilder result = new StringBuilder();
+	
+		for (int i = 0; i < this.height; i++) {
+			for (int j = 0; j < this.width; j++) {
+				result.append(this.screenMatrix[i][j]);
+			}
+			result.append("\n");
+		}
+	
+		return result.toString();
 	}
 
 	//Screen clear location
@@ -59,16 +79,19 @@ public class GameScreen {
 
 	public void clearScreenLose(String texto) {
         try {
-            final String os = System.getProperty("os.name");
+            // final String os = System.getProperty("os.name");
 
-            if (os.contains("Windows")) {
-                // Si el sistema operativo es Windows
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                // Si el sistema operativo es Unix o Linux
-                Runtime.getRuntime().exec("clear");
-            }
-			System.out.println(texto);
+            // if (os.contains("Windows")) {
+            //     // Si el sistema operativo es Windows
+            //     new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            // } else {
+            //     // Si el sistema operativo es Unix o Linux
+            //     Runtime.getRuntime().exec("clear");
+            // }
+			// System.out.println(texto);
+
+			// ? Reemplazamos el System.out.println por JOptionPane de Java Swing
+			JOptionPane.showMessageDialog(null, texto);
 
 			//? Cerramos el programa
 			System.exit(0);

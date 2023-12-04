@@ -19,15 +19,15 @@ public class Snake extends GameObject {
 		return this.puntaje;
 	}
 
-	public void setPuntaje(short puntaje, Player player) {
-		player.setScore(puntaje);
-		if (puntaje >= 5) {
-			System.out.println("Ganaste, tu puntaje es: " + puntaje + " puntos");
-			Player.savePlayerInfo(player);
-			System.exit(0);
-		}
-		this.puntaje = puntaje;
-	}
+	// public void setPuntaje(short puntaje, Player player) {
+	// 	player.setScore(puntaje);
+	// 	if (puntaje >= 5) {
+	// 		System.out.println("Ganaste, tu puntaje es: " + puntaje + " puntos");
+	// 		Player.savePlayerInfo(player);
+	// 		System.exit(0);
+	// 	}
+	// 	this.puntaje = puntaje;
+	// }
 
 	public String getDirection() {
 		return this.direction;
@@ -37,18 +37,12 @@ public class Snake extends GameObject {
 		this.direction = direction;
 	}
 
-	public void moveLeft(GameScreen screen, Snake snake, Food food, Player player) {
-		snake.setDirection("LEFT");
-		if (willSnakeHitWall(snake, screen)) {
-			// ! Realiza acciones específicas cuando la serpiente choca con la pared al
-			// moverse a la derecha
-			Player.savePlayerInfo(player);
-			screen.clearScreenLose("Perdiste, tu puntaje es: " + snake.getPuntaje() + " puntos");
-		}
+	
 
+	public void moveLeft(GameScreen screen, Snake snake, Food food, Player player) {
 		if (screen.getScreenMatrix()[snake.getY()][snake.getX() - 1] == '*') {
-			food.addRandomFoodNew(screen, food);
-			snake.setPuntaje((short) (snake.getPuntaje() + 1), player);
+			//? Agregamos la comida en un lugar aleatorio
+			sumarPuntaje(player, food, screen);
 		}
 		snake.setX(getX() - 1);
 		screen.setObjectOnLocation(snake, snake.getX(), snake.getY());
@@ -56,17 +50,8 @@ public class Snake extends GameObject {
 	}
 
 	public void moveRight(GameScreen screen, Snake snake, Food food, Player player) {
-		snake.setDirection("RIGHT");
-		if (willSnakeHitWall(snake, screen)) {
-			// Realiza acciones específicas cuando la serpiente choca con la pared al
-			// moverse a la derecha
-			Player.savePlayerInfo(player);
-			screen.clearScreenLose("Perdiste, tu puntaje es: " + snake.getPuntaje() + " puntos");
-		}
-
 		if (screen.getScreenMatrix()[snake.getY()][snake.getX() + 1] == '*') {
-			food.addRandomFoodNew(screen, food);
-			snake.setPuntaje((short) (snake.getPuntaje() + 1), player);
+			sumarPuntaje(player, food, screen);
 		}
 		snake.setX(getX() + 1);
 		screen.setObjectOnLocation(snake, snake.getX(), snake.getY());
@@ -74,17 +59,8 @@ public class Snake extends GameObject {
 	}
 
 	public void moveUp(GameScreen screen, Snake snake, Food food, Player player) {
-		snake.setDirection("UP");
-		if (willSnakeHitWall(snake, screen)) {
-			// Realiza acciones específicas cuando la serpiente choca con la pared al
-			// moverse a la derecha
-			Player.savePlayerInfo(player);
-			screen.clearScreenLose("Perdiste, tu puntaje es: " + snake.getPuntaje() + " puntos");
-		}
-
 		if (screen.getScreenMatrix()[snake.getY() - 1][snake.getX()] == '*') {
-			food.addRandomFoodNew(screen, food);
-			snake.setPuntaje((short) (snake.getPuntaje() + 1), player);
+			sumarPuntaje(player, food, screen);
 		}
 		snake.setY(getY() - 1);
 		screen.setObjectOnLocation(snake, snake.getX(), snake.getY());
@@ -93,21 +69,47 @@ public class Snake extends GameObject {
 	}
 
 	public void moveDown(GameScreen screen, Snake snake, Food food, Player player) {
-		snake.setDirection("DOWN");
-		if (willSnakeHitWall(snake, screen)) {
-			// Realiza acciones específicas cuando la serpiente choca con la pared al
-			// moverse a la derecha
-			Player.savePlayerInfo(player);
-			screen.clearScreenLose("Perdiste, tu puntaje es: " + snake.getPuntaje() + " puntos");
-		}
-
 		if (screen.getScreenMatrix()[snake.getY() + 1][snake.getX()] == '*') {
-			food.addRandomFoodNew(screen, food);
-			snake.setPuntaje((short) (snake.getPuntaje() + 1), player);
+			sumarPuntaje(player, food, screen);
 		}
 		snake.setY(getY() + 1);
 		screen.setObjectOnLocation(snake, snake.getX(), snake.getY());
 		screen.ClearScreenLocation(snake.getX(), snake.getY() - 1);
+	}
+
+	// ? Funcion para mover la serpiente
+	public void move(GameScreen screen, Snake snake, Food food, Player player, String movimiento) {
+		snake.setDirection(movimiento);
+		if (willSnakeHitWall(snake, screen)) {
+			// Realiza acciones específicas cuando la serpiente choca con la pared
+			Player.savePlayerInfo(player);
+			screen.clearScreenLose("Perdiste, tu puntaje es: " + player.getScore() + " puntos");
+		}
+
+		switch (movimiento) {
+			case "LEFT":
+				snake.moveLeft(screen, snake, food, player);
+				break;
+			case "RIGHT":
+				snake.moveRight(screen, snake, food, player);
+				break;
+			case "UP":
+				snake.moveUp(screen, snake, food, player);
+				break;
+			case "DOWN":
+				snake.moveDown(screen, snake, food, player);
+				break;
+			default:
+				// Manejo de la dirección desconocida (puedes agregar lógica adicional si es
+				// necesario)
+				break;
+		}
+	}
+
+	// ? Funcion para setear la comida en un lugar aleatorio y sumar el puntaje
+	private void sumarPuntaje(Player player, Food food, GameScreen screen) {
+		food.addRandomFoodNew(screen, food);
+		player.setScore((short) (player.getScore() + 1), player);
 	}
 
 	// public void move(GameScreen screen, Snake snake, Food food, Player player, String direction) {
