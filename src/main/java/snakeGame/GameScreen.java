@@ -1,11 +1,6 @@
 package snakeGame;
 
-import javax.swing.UIManager;
-
-import javafx.scene.text.Font;
 import javax.swing.JOptionPane;
-
-
 
 public class GameScreen {
 
